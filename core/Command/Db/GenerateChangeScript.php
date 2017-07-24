@@ -47,7 +47,6 @@ class GenerateChangeScript extends Command implements CompletionAwareInterface {
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
-
 		$file = $input->getArgument('schema-xml');
 
 		$schemaManager = new \OC\DB\MDB2SchemaManager(\OC::$server->getDatabaseConnection());
@@ -58,7 +57,6 @@ class GenerateChangeScript extends Command implements CompletionAwareInterface {
 		} catch (\Exception $e) {
 			$output->writeln('Failed to update database structure ('.$e.')');
 		}
-
 	}
 
 	/**

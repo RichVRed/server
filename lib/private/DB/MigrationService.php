@@ -165,7 +165,8 @@ class MigrationService {
 				\RecursiveIteratorIterator::LEAVES_ONLY
 			),
 			'#^.+\\/Version[^\\/]{1,255}\\.php$#i',
-			\RegexIterator::GET_MATCH);
+			\RegexIterator::GET_MATCH
+		);
 
 		$files = array_keys(iterator_to_array($iterator));
 		uasort($files, function ($a, $b) {
@@ -274,7 +275,7 @@ class MigrationService {
 	 * @return mixed|null|string
 	 */
 	public function getMigration($alias) {
-		switch($alias) {
+		switch ($alias) {
 			case 'current':
 				return $this->getCurrentVersion();
 			case 'next':
@@ -389,11 +390,11 @@ class MigrationService {
 			throw new \InvalidArgumentException('Not a valid migration');
 		}
 
-		$instance->preSchemaChange($this->output, function() {
+		$instance->preSchemaChange($this->output, function () {
 			return $this->connection->createSchema();
 		}, ['tablePrefix' => $this->connection->getPrefix()]);
 
-		$toSchema = $instance->changeSchema($this->output, function() {
+		$toSchema = $instance->changeSchema($this->output, function () {
 			return new SchemaWrapper($this->connection);
 		}, ['tablePrefix' => $this->connection->getPrefix()]);
 
@@ -402,7 +403,7 @@ class MigrationService {
 			$toSchema->performDropTableCalls();
 		}
 
-		$instance->postSchemaChange($this->output, function() {
+		$instance->postSchemaChange($this->output, function () {
 			return $this->connection->createSchema();
 		}, ['tablePrefix' => $this->connection->getPrefix()]);
 
